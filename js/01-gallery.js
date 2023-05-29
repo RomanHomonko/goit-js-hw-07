@@ -1,20 +1,18 @@
 import { galleryItems } from "../js/gallery-items.js";
 
-console.log(galleryItems);
-
 const gallery = document.querySelector(".gallery");
 
 function createGalleryMarkup(items) {
   return items
     .map(
-      (item) => `<div class="gallery-item">
-  <a class="gallery-link" href="${item.original}">
-    <img class="gallery-image"
+      (item) => `<li class="gallery__item">
+  <a class="gallery__link" href="${item.original}">
+    <img class="gallery__image"
       src="${item.preview}"
       data-source="${item.original}"
       alt="${item.description}"/>
   </a>
-</div>`
+</li>`
     )
     .join("");
 }
@@ -32,11 +30,13 @@ function onImageClick(evt) {
     `<img src="${evt.target.dataset.source}" width="800" height="600">`
   );
   instance.show();
-  gallery.addEventListener("keydown", (evt) => {
-    if (evt.code === "Escape") {
-      instance.close();
-    }
-  });
+  gallery.addEventListener("keydown", handleKeyDown);
+}
+
+function handleKeyDown(evt) {
+  if (evt.code === "Escape") {
+    instance.close();
+  }
 }
 
 function blockStandardAction(evt) {
